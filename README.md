@@ -7,7 +7,7 @@ This is a email guide in english for the korean mobile game Mystic Messenger by 
 
 ## DEMO
 
-To use this, you only have to input the name of the guest on the search e TA DAAA:
+To use this, you only have to input the name of the guest on the search andddd TA DAAA:
 
 ![demo](./src/img/demo.gif)
 
