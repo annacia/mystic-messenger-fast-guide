@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useFormik } from "formik";
-import notFound from '../../img/not_found.webp'
+import notFound from '../../img/notfound.gif'
 import {EMAIL} from '../../mocks/email';
 
 const initialValues = {
