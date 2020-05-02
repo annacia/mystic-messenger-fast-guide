@@ -17,7 +17,7 @@ const SearchEmail = () => {
 
     const searchKeys = (textInput) => {
         let guestResult = []
-        Object.keys(EMAIL).filter(guest => guest.includes(textInput)).map(
+        Object.keys(EMAIL).filter(guest => guest.includes(textInput.toLowerCase())).map(
             guestFinded => (
                 guestResult.push(EMAIL[guestFinded])
             )
