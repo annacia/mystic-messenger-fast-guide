@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useFormik } from "formik";
+import notFound from '../../img/not_found.webp'
 import {EMAIL} from '../../mocks/email';
 
 const initialValues = {
@@ -8,6 +9,7 @@ const initialValues = {
 
 const SearchEmail = () => {
     const [ result, setResult ] = useState([])
+    const [ text, setText ] = useState("")
 
     const formik = useFormik({
         initialValues
@@ -26,9 +28,12 @@ const SearchEmail = () => {
     
 
     const Result = () => {
-        if (result.length === 0) {
+        if (result.length === 0 && text !== "") {
             return(
-                <span>Guest: {formik.text} not found...</span>
+                <>
+                <img className="notfound-img" src={notFound} alt="Guest not found..."/>
+                <span className="notfound-label">Guest: {text} not found...</span>
+                </>
             )
         }
 
@@ -37,7 +42,7 @@ const SearchEmail = () => {
 
             if (info.another) {
                 return (
-                    <p className="another-label">Another History</p>
+                    <span className="another-label">Another History</span>
                 )
             }
 
@@ -50,9 +55,9 @@ const SearchEmail = () => {
         return (
             <div>
             {result.map(info=> (
-                <div key={info.name+"_box"}>
+                <div className="card-result" key={info.name+"_box"}>
+                        <span key={info.name+"_title"} className="title-guest">@{info.name}</span>
                         <IsAnother info={info}/>
-                    <span key={info.name+"_title"} className="title-guest">@{info.name}</span>
                     <ul key={info.name+"_list"}>
                         {info.answers.map((answers, key) => ( <li key={info.name+key}>{answers}</li>))}
                     </ul>
@@ -63,6 +68,7 @@ const SearchEmail = () => {
     }
 
     useEffect(() => {
+        setText(formik.values.text)
         if (formik.values.text !== "") {
             searchKeys(formik.values.text)
         } else {
@@ -71,7 +77,7 @@ const SearchEmail = () => {
     }, [formik.values.text]);
 
     return (
-        <div id="form-gif">
+        <div id="form-search">
             <form id="form-content" 
             onSubmit={e => {
                 e.preventDefault()
