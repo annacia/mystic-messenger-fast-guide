@@ -1,0 +1,15 @@
+#form-search  .form-group {
+    text-align: left;
+    width: 80%;
+    margin: 20px auto;
+}
+
+#form-search .form-group.group-items {
+    margin: 0 auto;
+    display: flex;
+}
+
+#form-search .form-group.group-items .item {
+    width: 50%;
+    padding: 0 5px;
+}
