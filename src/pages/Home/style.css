@@ -78,6 +78,36 @@
     font-size: 25px;
 }
 
+#search.home img{
+    display: block;
+    margin: 10px auto;
+    width: 500px;
+}
+
+#home-nav {
+    display: flex;
+}
+
+#home-nav a {
+    display: block;
+    text-decoration: none;
+    background-color: #fff;
+    width: 200px;
+    margin: 0 auto;
+    padding: 10px 0;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    border: 2px solid #000;
+    color: #000;
+    font-weight: 800;
+}
+
+#home-nav a:hover {
+    background-color: #3d2e0e;
+    border-color: #3d2e0e;
+    color: #fdf193;
+}
+
 @media only screen and (max-width: 700px) {
     #container #search .card-result,
     #container #search input {
@@ -86,5 +116,13 @@
 
     #search .notfound-label {
         font-size: 16px;
+    }
+
+    #home-nav {
+        line-height: 30px;
+    }
+
+    #search.home img{
+        width: 250px;
     }
 }

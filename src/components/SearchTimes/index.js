@@ -1,14 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useFormik } from "formik";
-import notFound from '../../img/notfound.gif'
 import {CHAT_TIMES} from '../../mocks/chat_times';
 import Select from 'react-select';
 
 import './style.css';
-
-const initialValues = {
-    text: ""
-};
 
 const addToArray = (
     obj, 
@@ -48,6 +42,8 @@ const SearchTimes = () => {
     const [ options, setOptions ] = useState([])
     const [ dayOptions, setDayOptions ] = useState([])
     const [ routeOptions, setRouteOptions ] = useState([])
+
+    const [ result, setResult ] = useState([])
     
     const buildOptions = () => {
         
@@ -69,16 +65,25 @@ const SearchTimes = () => {
         setOptions(optionsArray)
     }
 
+    const getDays = (route, value) => {
+        if (route !== undefined) {
+            return CHAT_TIMES[route]["routes"][value]["days"]
+        }
+
+        if (routeSelected !== "" && routeSelected !== 0) {
+            return CHAT_TIMES[value]["routes"][routeSelected.value]["days"]
+        }
+        
+        console.log(CHAT_TIMES[value]["days"])
+        return CHAT_TIMES[value]["days"]
+    }
+
     const buildDays = () => {
         let daysArray = [];
-        let days = {}
         let value = modeSelected.value
         let route = modeSelected.route
-        if (route !== undefined) {
-            days = CHAT_TIMES[route]["routes"][value]["days"]
-        } else {
-            days = CHAT_TIMES[value]["days"]
-        }
+        
+        let days = getDays(route, value)
 
         let keys = Object.keys(days)
 
@@ -95,10 +100,22 @@ const SearchTimes = () => {
 
     } 
 
-    
-    const formik = useFormik({
-        initialValues
-    });
+    const buildResult = () => {
+        let value = modeSelected.value
+        let route = modeSelected.route
+
+        if (route !== undefined) {
+            setResult(CHAT_TIMES[route]["routes"][value]["days"][daySelected.value])
+            return;
+        }
+
+        if (routeSelected !== "" && routeSelected !== 0) {
+            setResult(CHAT_TIMES[value]["routes"][routeSelected.value]["days"][daySelected.value])
+            return;
+        }
+
+        setResult(CHAT_TIMES[value]["days"][daySelected.value])
+    }
     
     useEffect(() => {
         if (options.length === 0) {
@@ -109,21 +126,27 @@ const SearchTimes = () => {
             buildDays()
         }
 
-        if (modeSelected !== "" && daySelected !== "") {
-            console.log(CHAT_TIMES[modeSelected.value]["days"][daySelected.value])
+        if (daySelected !== "" && daySelected !== 0) {
+            buildResult()
+
         }
     })
 
     const handleModeChange = (selectedOption) => {
         setModeSelected(selectedOption);
+        setResult([])
+        setDaySelected(0)
         setDayOptions([])
+        setRouteOptions([])
+        setRouteSelected(0)
         buildOptionsRoute(selectedOption)
     }
 
     const handleRouteChange = (selectedOption) => {
+        setResult([])
         setRouteSelected(selectedOption);
+        setDaySelected(0)
         setDayOptions([])
-        buildDays()
     }
 
     const buildOptionsRoute = (selectedOption) => {
@@ -140,13 +163,6 @@ const SearchTimes = () => {
         let keys = Object.keys(routes)
         let optionsRouteArray = []
 
-        optionsRouteArray.push(
-            {
-                value: 0,
-                label: "Common Route"
-            }
-        )
-
         for(let i=0; i < keys.length; i++) {
             let value = {
                 value: keys[i],
@@ -160,7 +176,48 @@ const SearchTimes = () => {
         setRouteSelected(0)
     }
 
+    const buildResultString = () => {
+        let mode = modeSelected.value
+        let route = mode
+        let day = daySelected.value
+        
+        let labelMode = modeSelected.label
+        let labelDay = daySelected.label
+        let labelRoute = ""
+
+        const setClassOddItem = (key) => {
+            if ((key % 2) === 0) {
+                return "item-even"
+            }
+
+            return "item-odd"
+        }
+
+        if (modeSelected.route !== undefined) {
+            route = modeSelected.route
+        }
+
+        if (routeSelected !== "" && routeSelected !== 0) {
+            labelRoute = routeSelected.label
+        }
+
+        return (
+            <div id="chat-times" className="card-result">
+                <h3>{labelMode} - {labelDay}</h3>
+                <h4>{labelRoute}</h4>
+                {
+                    result.map((info, key)=> (
+                        <div key={mode+"_"+route+"_"+day+info.replace(":", "")} className={setClassOddItem(key)}>
+                            {info}
+                        </div>
+                    ))
+                }
+            </div>
+        )
+    }
+
     return (
+        <>
         <div id="form-search">
             <form id="form-content" 
             onSubmit={e => {
@@ -172,8 +229,10 @@ const SearchTimes = () => {
                     <>
                     <label>Game Mode</label>
                     <Select
+                        className="form-select"
                         options={options}
                         onChange={handleModeChange}
+                        value={modeSelected}
                     />
                     </>
                     }
@@ -185,6 +244,7 @@ const SearchTimes = () => {
                     <Select
                         options={dayOptions}
                         onChange={setDaySelected}
+                        value={daySelected}
                     />
                     </>
                     }
@@ -198,12 +258,24 @@ const SearchTimes = () => {
                     <Select
                         options={routeOptions}
                         onChange={handleRouteChange}
+                        value={routeSelected}
                     />
                     </>
                     }   
                 </div>
             </form>
         </div>
+        <div id="list-result">
+            {result !== undefined &&
+            result.length > 0 && 
+            <>
+                {
+                    buildResultString()
+                }
+            </>
+            }
+        </div>
+        </>
     )
 }
   

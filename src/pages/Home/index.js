@@ -1,8 +1,8 @@
 import React from 'react';
-import SearchEmail from '../../components/SearchEmail'
-import SearchTimes from '../../components/SearchTimes'
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
+import { Link } from 'react-router-dom';
+import image from '../../img/home.jpg'
 import './style.css'
 
 const Home = () => {
@@ -10,21 +10,16 @@ const Home = () => {
     return(
         <div id="container-body">
             <div id="container">
-                <Header/>
+                <Header showText={true}/>
 
-                <section id="search">
+                <section id="search" className="home">
                     <header>
-                        <h2>Email Guide</h2>
-                        <p>Find quickly the right answers for emails!</p>
+                        <nav id="home-nav">
+                            <Link to={`/emails`}>Answers for Emails</Link>
+                            <Link to={`/chat-times`}>Chat Times (Without Spoiler)</Link>
+                        </nav>
                     </header>
-                    <SearchEmail/>
-                </section>
-                <section id="search">
-                    <header>
-                        <h2>Chat Times</h2>
-                        <p>Find quickly the chat times!</p>
-                    </header>
-                    <SearchTimes/>
+                    <img src={image} alt="Home"/>
                 </section>
             </div>
             <Footer/>

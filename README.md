@@ -1,9 +1,9 @@
-# Mystic Messenger Email Guide
+# Mystic Messenger Fast Guide
 (I made this because I was very bored hahaha)
 
 ## Description
 
-This is a email guide in english for the korean mobile game Mystic Messenger by Cheritz.
+This is a fast guide in english for the korean mobile game Mystic Messenger by Cheritz.
 
 ## DEMO
 

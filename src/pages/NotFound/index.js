@@ -15,8 +15,10 @@ const NotFound = () => {
                     <header>
                         <h2>404 Page Not Found</h2>
                         <p>What are you looking for?</p>
-                        <p>For now, I can only help you to find the correct answers for emails...</p>
-                        <Link to={`/`}>Search For Emails</Link>
+                        <p>For now, I can only help you to find the correct answers for emails and the chat times...</p>
+                        <Link to={`/`}>Home</Link>
+                        <Link to={`/emails`}>Search For Emails</Link>
+                        <Link to={`/chat-times`}>Search For Chat Times</Link>
                         <img src={image} alt="Not Found..."/>
                     </header>
                 </section>

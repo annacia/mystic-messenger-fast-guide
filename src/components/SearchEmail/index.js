@@ -16,6 +16,7 @@ const SearchEmail = () => {
     });
 
     const searchKeys = (textInput) => {
+        textInput = textInput.replace("@", "")
         let guestResult = []
         Object.keys(EMAIL).filter(guest => guest.includes(textInput.toLowerCase())).map(
             guestFinded => (

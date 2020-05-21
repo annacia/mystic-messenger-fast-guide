@@ -13,3 +13,12 @@
     width: 50%;
     padding: 0 5px;
 }
+
+#list-result #chat-times .item-even,
+#list-result #chat-times .item-odd {
+    padding: 5px 0;
+}
+
+#list-result #chat-times .item-even {
+    background-color: #fbeea15e;
+}
